@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Test1234.
+      - POSTGRES_DB=weather_app
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis
+    container_name: redis-master
+    hostname: redis-master
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    container_name: sidekiq
+    hostname: sidekiq
+    environment:
+      - DATABASE_PASS=Test1234.
+      - OPEN_WEATHER_API_KEY=d03b13e3222c736920eaa0fcb5728369
+    depends_on:
+      - redis
+      - db
+    build:
+      context: .
+      dockerfile: docker/sidekiq/Dockerfile
+    image: wapp-sidekiq:latest
+
+  weather-app:
+    container_name: weather-app
+    hostname: weather-app
+    environment:
+      - DATABASE_PASS=Test1234.
+    depends_on:
+      - redis
+      - db
+      - sidekiq
+    build:
+      context: .
+      dockerfile: docker/weather-app/Dockerfile
+    image: wapp-app:latest
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
