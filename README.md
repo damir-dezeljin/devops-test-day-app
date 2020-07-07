@@ -84,3 +84,10 @@ PATCH /weather_reports/:id
   * Find redis host in sidekiq initializers file
   * Start rails application with `bash -c bundle exec rails server -p 3000 -b '0.0.0.0'`
   * Start sidekiq with `bash -c "bundle exec sidekiq -C config/sidekiq.yml`
+
+## Dockerized app
+
+### Build instructions
+
+1. Run `docker-compose up`;
+2. Open a browser and point it to [Sidekiq dashboard](http://localhost:3000/sidekiq).
