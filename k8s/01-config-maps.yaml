@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: weather-app-config
+  labels:
+    app: weather-app
+data:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: Test1234.
+  POSTGRES_DB: weather_app
+  OPEN_WEATHER_API_KEY: d03b13e3222c736920eaa0fcb5728369

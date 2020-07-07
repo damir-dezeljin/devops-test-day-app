@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  labels:
+    app: db
+spec:
+  selector:
+    app: db
+  type: NodePort
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+    name: db-tcp-port
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db
+  labels:
+    app: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+  serviceName: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: db
+        image: postgres
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: weather-app-config
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: weather-app-config
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: weather-app-config
+                key: POSTGRES_DB
+        ports:
+          - containerPort: 5432
+            name: postgre-port
