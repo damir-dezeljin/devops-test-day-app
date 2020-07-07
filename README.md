@@ -91,3 +91,26 @@ PATCH /weather_reports/:id
 
 1. Run `docker-compose up`;
 2. Open a browser and point it to [Sidekiq dashboard](http://localhost:3000/sidekiq).
+
+
+### REST client
+
+The REST client application is built using NodeJS. In order to use it, you'll need a recent version of `Node`.
+
+1. First install dependent modules:
+
+   ```bash
+   npm install
+   ```
+
+2. Run the application:
+
+   ```bash
+   node rest-client.js
+   ```
+   &uparrow;&uparrow;&uparrow; <br>
+   The header of the file sets the temperature limits.
+
+### Kubernetes deployment yaml files
+
+Check the `k8s/` directory and follow the increasing file numbers :) I used `d-labs` namespace on minicube installed as part of *Docker Desktop for Mac*.
